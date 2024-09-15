@@ -1,4 +1,5 @@
 import { products } from "@/data/products";
+import AddToCartButton from "@/components/addToCartButton";
 
 export default function ProductPage({ params }: { params: { id: string } }) {
   const product= products.find((p) => p.id === params.id);
@@ -13,6 +14,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       <h2>{product.name}</h2>
       <p>Price: {product.price} SEK</p>
       <p>{product.description}</p>
+      <AddToCartButton product={product} />
     </div>
   );
 }
