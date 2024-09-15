@@ -7,6 +7,8 @@ export default function Navbar() {
 
   const { state } = useCart();
 
+  const totalItemsInCart = state.items.reduce((total, item) => total + item.quantity, 0)
+
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex justify-between">
@@ -17,7 +19,7 @@ export default function Navbar() {
           <p className="text-white"> Products</p>
         </Link>
         <Link href="/cart">
-        <p className="text-white"> Cart ({state.items.length})</p>
+        <p className="text-white"> Cart ({totalItemsInCart})</p>
         </Link>
       </div>
     </nav>
