@@ -14,6 +14,11 @@ export default function CartPage() {
     dispatch({ type: "DECREASE_QUANTITY", id });
   }
 
+  const totalPrice = state.items.reduce(
+    (total, item) => total + item.product.price * item.quantity,
+    0
+  );
+
   if (state.items.length === 0) {
     return <div>Your cart is empty</div>
   }
@@ -38,6 +43,11 @@ export default function CartPage() {
           </li>
         ))}
       </ul>
+
+      <div className="text-xl font-bold mt-4">
+        Total price: {totalPrice.toFixed(2)} SEK
+      </div>
+
       <Link href="/products">
         <p className="bg-blue-500 text-white px-4 py-2 rounded">Continue Shopping</p>
       </Link>
