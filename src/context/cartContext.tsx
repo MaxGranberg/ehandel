@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useReducer, ReactNode } from "react";
+import React, { createContext, useContext, useReducer, ReactNode, useEffect, useState } from "react";
 
 type Product = {
   id: string;
@@ -20,9 +20,10 @@ type CartState = {
 type CartAction = 
 | { type: "ADD_TO_CART"; product: Product }
 | { type: "REMOVE_FROM_CART"; id: string }
-| { type: "DECREASE_QUANTITY"; id: string}
+| { type: "DECREASE_QUANTITY"; id: string }
+| { type: "LOAD_CART"; items: CartItem[] }
 
-const CartContext = createContext<{ state: CartState; dispatch: React.Dispatch<CartAction> } | undefined>(undefined);
+const CartContext = createContext<{ state: CartState; dispatch: React.Dispatch<CartAction>; cartLoaded: boolean } | undefined>(undefined);
 
 const cartReducer = (state: CartState, action: CartAction): CartState => {
   switch (action.type) {
@@ -66,6 +67,12 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         };
       }
     }
+    case "LOAD_CART": {
+      return {
+        ...state,
+        items: action.items
+      };
+    }
     default:
       return state;
   }
@@ -73,8 +80,25 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(cartReducer, { items: [] });
+  const [cartLoaded, setCartLoaded] = useState(false);
 
-  return <CartContext.Provider value={{ state, dispatch }}>{children}</CartContext.Provider>;
+  // Load the cart from localStorage when the component mounts
+  useEffect(() => {
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      dispatch({ type: "LOAD_CART", items: JSON.parse(storedCart) });
+    }
+    setCartLoaded(true)
+   }, []);
+   
+  // Save the cart to localStorage whenever the cart state changes
+  useEffect(() => {
+    if (state.items.length > 0) {
+      localStorage.setItem("cart", JSON.stringify(state.items));
+    }
+  }, [state.items]);
+
+  return <CartContext.Provider value={{ state, dispatch, cartLoaded }}>{children}</CartContext.Provider>;
 };
 
 export const useCart = () => {

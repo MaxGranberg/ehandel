@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import { useCart } from "@/context/cartContext";
 
 export default function Navbar() {
 
-  const { state } = useCart();
+  const { state, cartLoaded } = useCart();
 
   const totalItemsInCart = state.items.reduce((total, item) => total + item.quantity, 0)
 
@@ -19,7 +20,17 @@ export default function Navbar() {
           <p className="text-white"> Products</p>
         </Link>
         <Link href="/cart">
-        <p className="text-white"> Cart ({totalItemsInCart})</p>
+          <p className="text-white relative flex items-center">
+            <ShoppingCartIcon className="h-6 w-6 text-white" />
+
+            {/* Display the cart count only when the cart is loaded */}
+            {cartLoaded && totalItemsInCart > 0 && (
+              <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                {totalItemsInCart}
+              </span>
+            )}
+
+          </p>
         </Link>
       </div>
     </nav>
