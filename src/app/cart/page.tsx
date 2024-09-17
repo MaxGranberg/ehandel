@@ -10,6 +10,13 @@ export default function CartPage() {
     dispatch({ type: "REMOVE_FROM_CART", id });
   }
 
+  const increaseQuantity = (id: string) => {
+    const product = state.items.find(item => item.product.id === id)?.product;
+    if (product) {
+      dispatch({ type: "ADD_TO_CART", product});
+    }
+  };
+
   const decreaseQuantity = (id: string) => {
     dispatch({ type: "DECREASE_QUANTITY", id });
   }
@@ -40,6 +47,9 @@ export default function CartPage() {
             <div className="flex gap-4">
               <button onClick={() => decreaseQuantity(item.product.id)} className="bg-yellow-500 text-white px-3 py-2 rounded">
                 Decrease quantity
+              </button>
+              <button onClick={() => increaseQuantity(item.product.id)} className="bg-green-500 text-white px-2 py-2 rounded">
+                Increase quantity
               </button>
             <button onClick={() => removeFromCart(item.product.id)} className="bg-red-500 text-white px-4 py-2 rounded">
               Remove
