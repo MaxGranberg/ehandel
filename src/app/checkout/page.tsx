@@ -47,9 +47,14 @@ export default function ChekoutPage() {
     0
   );
 
-   // If cart is not loaded yet, or it's empty (and no order has been submitted), return null (no render)
-  if (!cartLoaded || (state.items.length === 0 && !orderSubmitted)) {
-    return null;
+  // Handle the loading state while the cart is being fetched
+  if (!cartLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  // Handle empty cart after the cart is loaded
+  if (state.items.length === 0 && !orderSubmitted) {
+    return <div>Your cart is empty.</div>;
   }
 
   if (orderSubmitted) {
@@ -60,13 +65,13 @@ export default function ChekoutPage() {
         <p>Your order has been succesfully submitted.</p>
         <h2 className="text-xl font-semibold mt-4">Order summary:</h2>
         <ul>
-          {state.orderSummary?.items.map((item, index) => (
+          {state.orderSummary.items.map((item, index) => (
             <li key={index} className="mb-2">
               {item.product.name} - (x{item.quantity}) - {item.product.price} SEK each
             </li>
           ))}
         </ul>
-        <p className="font-bold mt-2">Total: {state.orderSummary?.total.toFixed(2)} SEK</p>
+        <p className="font-bold mt-2">Total: {state.orderSummary.total.toFixed(2)} SEK</p>
         <p>We will send a confirmation e-mail to {userInfo.email} shortly.</p>
       </div>
     );

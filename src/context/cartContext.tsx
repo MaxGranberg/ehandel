@@ -18,7 +18,7 @@ type CartState = {
   orderSummary: {
     items: CartItem[];
     total: number;
-  } | null; // This will hold the snapshot of the cart items and total before clearing the cart
+  };
 };
 
 type CartAction = 
@@ -94,9 +94,10 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 };
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(cartReducer, { 
+  const [state, dispatch] = useReducer(cartReducer, {
     items: [],
-    orderSummary: null }); // Initialize order summary as null
+    orderSummary: { items: [], total: 0 },
+  });
   
   const [cartLoaded, setCartLoaded] = useState(false);
 
