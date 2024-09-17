@@ -4,7 +4,7 @@ import { useCart } from "@/context/cartContext";
 import Link from "next/link";
 
 export default function CartPage() {
-  const { state, dispatch } = useCart();
+  const { state, dispatch, cartLoaded } = useCart();
 
   const removeFromCart = (id: string) => {
     dispatch({ type: "REMOVE_FROM_CART", id });
@@ -18,6 +18,11 @@ export default function CartPage() {
     (total, item) => total + item.product.price * item.quantity,
     0
   );
+
+  if (!cartLoaded) {
+    return <div>Loading...</div>
+  }
+
 
   if (state.items.length === 0) {
     return <div>Your cart is empty</div>

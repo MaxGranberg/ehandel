@@ -95,6 +95,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (state.items.length > 0) {
       localStorage.setItem("cart", JSON.stringify(state.items));
+    } else {
+      localStorage.removeItem("cart")
     }
   }, [state.items]);
 
