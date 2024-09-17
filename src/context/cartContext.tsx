@@ -15,13 +15,19 @@ type CartItem = {
 
 type CartState = {
   items: CartItem[];
-}
+  orderSummary: {
+    items: CartItem[];
+    total: number;
+  } | null; // This will hold the snapshot of the cart items and total before clearing the cart
+};
 
 type CartAction = 
 | { type: "ADD_TO_CART"; product: Product }
 | { type: "REMOVE_FROM_CART"; id: string }
 | { type: "DECREASE_QUANTITY"; id: string }
 | { type: "LOAD_CART"; items: CartItem[] }
+| { type: "SET_ORDER_SUMMARY"; orderSummary: { items: CartItem[]; total: number } }
+| { type: "CLEAR_CART"; };
 
 const CartContext = createContext<{ state: CartState; dispatch: React.Dispatch<CartAction>; cartLoaded: boolean } | undefined>(undefined);
 
@@ -73,13 +79,25 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         items: action.items
       };
     }
+    case "SET_ORDER_SUMMARY": {
+      return {
+        ...state,
+        orderSummary: action.orderSummary, // Store the cart snapshot (items and total)
+      };
+    }
+    case "CLEAR_CART": {
+      return { ...state, items: [] }
+    }
     default:
       return state;
   }
 };
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(cartReducer, { items: [] });
+  const [state, dispatch] = useReducer(cartReducer, { 
+    items: [],
+    orderSummary: null }); // Initialize order summary as null
+  
   const [cartLoaded, setCartLoaded] = useState(false);
 
   // Load the cart from localStorage when the component mounts

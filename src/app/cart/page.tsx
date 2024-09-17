@@ -53,9 +53,15 @@ export default function CartPage() {
         Total price: {totalPrice.toFixed(2)} SEK
       </div>
 
-      <Link href="/products">
-        <p className="bg-blue-500 text-white px-4 py-2 rounded">Continue Shopping</p>
+      <div className="grid column">
+      <Link href="/checkout">
+        <p className="bg-green-500 text-white px-4 py-2 rounded mt-4 inline-block">Proceed to chekout</p>
       </Link>
+
+      <Link href="/products">
+        <p className=" mt-4 bg-blue-500 text-white px-4 py-2 rounded inline-block">Continue Shopping</p>
+      </Link>
+      </div>
     </div>
   );
 }
