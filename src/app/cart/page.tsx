@@ -32,45 +32,76 @@ export default function CartPage() {
 
 
   if (state.items.length === 0) {
-    return <div>Your cart is empty</div>
+    return <div className="text-center text-xl text-gray-600">Your cart is empty</div>;
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
-      <ul>
+    <div className="container mx-auto p-8">
+      <h1 className="text-4xl font-extrabold text-primary mb-8 text-center">Shopping Cart</h1>
+      
+      {/* Cart Items */}
+      <ul className="space-y-6">
         {state.items.map((item) => (
-          <li key={item.product.id} className="mb-4">
-            <h2>{item.product.name}</h2>
-            <p>Price: {item.product.price} SEK</p>
-            <p>Quantity: {item.quantity}</p>
-            <div className="flex gap-4">
-              <button onClick={() => decreaseQuantity(item.product.id)} className="bg-yellow-500 text-white px-3 py-2 rounded">
-                Decrease quantity
+          <li key={item.product.id} className="flex flex-col md:flex-row items-center justify-between bg-white shadow-lg p-6 rounded-lg">
+            {/* Product Info */}
+            <div className="flex items-center gap-4 mb-4 md:mb-0">
+              <div className="bg-gray-200 w-24 h-24 rounded-lg flex justify-center items-center">
+                <p className="text-gray-500">Image not available</p>
+              </div>
+              <div>
+                <h2 className="text-xl font-semibold text-primary">{item.product.name}</h2>
+                <p className="text-lg text-accent font-semibold">{item.product.price} SEK</p>
+              </div>
+            </div>
+
+            {/* Quantity Controls */}
+            <div className="flex items-center gap-4">
+              <div className="flex items-center">
+                <button
+                  onClick={() => decreaseQuantity(item.product.id)}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-900 px-4 py-2 rounded-l-lg"
+                >
+                  -
+                </button>
+                <span className="px-6 py-2 text-gray-700">{item.quantity}</span>
+                <button
+                  onClick={() => increaseQuantity(item.product.id)}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-900 px-4 py-2 rounded-r-lg"
+                >
+                  +
+                </button>
+              </div>
+
+              {/* Remove Button */}
+              <button
+                onClick={() => removeFromCart(item.product.id)}
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+              >
+                Remove
               </button>
-              <button onClick={() => increaseQuantity(item.product.id)} className="bg-green-500 text-white px-2 py-2 rounded">
-                Increase quantity
-              </button>
-            <button onClick={() => removeFromCart(item.product.id)} className="bg-red-500 text-white px-4 py-2 rounded">
-              Remove
-            </button>
             </div>
           </li>
         ))}
       </ul>
 
-      <div className="text-xl font-bold mt-4">
+      {/* Total Price */}
+      <div className="text-2xl font-bold text-right mt-8">
         Total price: {totalPrice.toFixed(2)} SEK
       </div>
 
-      <div className="grid column">
-      <Link href="/checkout">
-        <p className="bg-green-500 text-white px-4 py-2 rounded mt-4 inline-block">Proceed to chekout</p>
-      </Link>
+      {/* Action Buttons */}
+      <div className="flex justify-between mt-8">
+        <Link href="/products">
+          <p className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg">
+            Continue Shopping
+          </p>
+        </Link>
 
-      <Link href="/products">
-        <p className=" mt-4 bg-blue-500 text-white px-4 py-2 rounded inline-block">Continue Shopping</p>
-      </Link>
+        <Link href="/checkout">
+          <p className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg">
+            Proceed to Checkout
+          </p>
+        </Link>
       </div>
     </div>
   );

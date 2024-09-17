@@ -2,26 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Define modern and elegant colors and typography */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --primary-color: #2d3748; /* Dark gray for primary text and footer background */
+  --secondary-color: #718096; /* Medium gray for secondary text */
+  --accent-color: #38a169; /* Green for secondary action buttons */
+  --background: #f7fafc; /* Light gray background */
+  --foreground: #2d3748; /* Dark gray text for readability */
+  --gray-color: #a0aec0; /* Even lighter gray for subtle text */
+  --font-primary: 'Inter', sans-serif;
 }
 
 body {
-  color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--foreground);
+  font-family: var(--font-primary);
+  line-height: 1.6;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* Footer background color and text color */
+footer {
+  background-color: var(--primary-color);
+  color: #ffffff; /* Ensure the footer text is always white for good contrast */
+}
+
+/* Apply custom Tailwind styles inside the @layer directive */
+@layer components {
+  .card {
+    @apply bg-white shadow-lg rounded-lg p-6;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    @apply shadow-xl;
+    transform: translateY(-4px);
+  }
+
+  .btn-primary {
+    @apply bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply bg-green-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-600 transition-colors;
+  }
+
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .text-primary {
+    color: var(--primary-color); /* Primary text: dark gray */
+  }
+
+  .text-secondary {
+    color: var(--secondary-color); /* Apply the custom CSS variable directly */
+  }
+
+  .container {
+    @apply max-w-screen-xl mx-auto px-4;
   }
 }
