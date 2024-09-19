@@ -25,16 +25,18 @@ export default function Navbar() {
           <Link href="/products" className="text-white hover:text-gray-300 transition-colors duration-300">
             Products
           </Link>
+          <Link href="/about" className="text-white hover:text-gray-300 transition-colors duration-300">
+            About Us
+          </Link>
         </div>
 
         {/* Flex container for search bar and cart icon */}
-        <div className="flex items-center space-x-12">
+        <div className="flex items-center space-x-6">
           
           {/* Searchbar */}
           <div className="w-full md:w-auto">
             <NavbarSearchBar />
           </div>
-
 
           {/* Cart Icon */}
           <Link href="/cart" className="relative flex items-center text-white">
@@ -47,18 +49,18 @@ export default function Navbar() {
           </Link>
 
           {/* Hamburger Icon for mobile */}
-        <div className="md:hidden">
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="text-white focus:outline-none"
-          >
-            {isMenuOpen ? (
-              <XMarkIcon className="h-7 w-7" />
-            ) : (
-              <Bars3Icon className="h-7 w-7" />
-            )}
-          </button>
-        </div>
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-white focus:outline-none"
+            >
+              {isMenuOpen ? (
+                <XMarkIcon className="h-7 w-7" />
+              ) : (
+                <Bars3Icon className="h-7 w-7" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -67,6 +69,9 @@ export default function Navbar() {
         <div className="md:hidden bg-gray-800 text-white py-3 space-y-4">
           <Link href="/products" className="block text-lg font-semibold hover:text-gray-300 transition-colors duration-300 text-center">
             Products
+          </Link>
+          <Link href="/about" className="block text-lg font-semibold hover:text-gray-300 transition-colors duration-300 text-center">
+            About Us
           </Link>
         </div>
       )}
