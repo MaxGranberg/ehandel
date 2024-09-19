@@ -25,8 +25,8 @@ export default function RootLayout({
       <body className={`${inter.variable} bg-background text-foreground antialiased`}>
         <CartProvider>
           <Navbar />
-          <main className="min-h-screen pt-12">
-            <div className="container">
+          <main className="min-h-screen pt-24">
+            <div className="container mx-auto">
               {children}
             </div>
           </main>

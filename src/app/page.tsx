@@ -28,7 +28,7 @@ export default function Home() {
       </section>
 
       {/* Featured Products Section with Swiper */}
-      <section className="container mx-auto p-8 mt-12">
+      <section className="container mx-auto p-8 mt-8">
         <h2 className="text-3xl font-bold text-center mb-4">Popular Products</h2>
         <Swiper
           slidesPerView={3}
@@ -58,7 +58,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="container mx-auto p-8 text-center mt-12 mb-12">
+      <section className="container mx-auto p-8 text-center mt-8 mb-12">
         <h2 className="text-3xl font-bold mb-8">Why Shop With Us?</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="card">
