@@ -30,12 +30,20 @@ footer {
 @layer components {
   .card {
     @apply bg-white shadow-lg rounded-lg p-6;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   }
 
   .card:hover {
     @apply shadow-xl;
-    transform: translateY(-4px);
+    transform: translateY(-6px);
+  }
+
+  .hover-scale {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.05);
   }
 
   .btn-primary {
@@ -51,11 +59,11 @@ footer {
   }
 
   .text-primary {
-    color: var(--primary-color); /* Primary text: dark gray */
+    color: var(--primary-color);
   }
 
   .text-secondary {
-    color: var(--secondary-color); /* Apply the custom CSS variable directly */
+    color: var(--secondary-color);
   }
 
   .container {
