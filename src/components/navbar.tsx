@@ -14,7 +14,7 @@ export default function Navbar() {
   return (
     <nav className="bg-gradient-to-r from-gray-800 to-gray-900 py-3 shadow-lg fixed w-full top-0 z-50">
       <div className="container mx-auto flex justify-between items-center space-x-6">
-        
+
         {/* Logo / Brand */}
         <Link href="/" className="text-white font-extrabold text-2xl tracking-tight hover:text-gray-300 transition duration-300">
           My E-Shop
@@ -28,11 +28,14 @@ export default function Navbar() {
           <Link href="/about" className="text-white hover:text-gray-300 transition-colors duration-300">
             About Us
           </Link>
+          <Link href="/contact" className="text-white hover:text-gray-300 transition-colors duration-300">
+            Contact
+          </Link>
         </div>
 
         {/* Flex container for search bar and cart icon */}
         <div className="flex items-center space-x-6">
-          
+
           {/* Searchbar */}
           <div className="w-full md:w-auto">
             <NavbarSearchBar />

@@ -9,7 +9,7 @@ export default function AboutUs() {
           <h1 className="text-5xl font-extrabold mb-6 text-center">About Us</h1>
           <p className="text-lg leading-relaxed text-center max-w-3xl mx-auto">
             Welcome to My E-Shop, your number one source for all things [product types]. 
-            We're dedicated to giving you the very best of [product types], 
+            We&apos;re dedicated to giving you the very best of [product types], 
             with a focus on quality, customer service, and uniqueness.
           </p>
         </div>
