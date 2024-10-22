@@ -6,9 +6,17 @@ import ProductCard from "@/components/productCard";
 import SearchBar from "@/components/searchBar";
 import { fetchProducts } from "@/utils/api/fetchProducts"; // Fetch products from API
 
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  image: string;
+}
+
+
 export default function ProductsPage() {
-  const [filteredProducts, setFilteredProducts] = useState([]); // Empty array as initial state
-  const [allProducts, setAllProducts] = useState([]); // Store all fetched products
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); // Empty array as initial state
+  const [allProducts, setAllProducts] = useState<Product[]>([]); // Store all fetched products
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState<string | null>(null); // Error state
 
