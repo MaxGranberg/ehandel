@@ -1,6 +1,7 @@
 "use client";
 
-import { products } from "@/data/products";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import { TruckIcon, ShieldCheckIcon, PhoneIcon } from "@heroicons/react/24/outline";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -8,9 +9,32 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import ProductCard from "@/components/productCard";
-import Link from "next/link";
+import { fetchPopularProducts } from "@/utils/api/fetchPopularProducts";
 
 export default function Home() {
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch products on component mount
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const popularProducts = await fetchPopularProducts();
+        setProducts(popularProducts);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadProducts();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center">Loading popular products...</div>;
+  }
+
   return (
     <div>
       {/* Hero Section */}
@@ -20,10 +44,9 @@ export default function Home() {
           <p className="text-white text-lg mb-8">
             Discover the latest trends and exclusive deals curated just for you.
           </p>
-          <a href="/products" className="btn-primary text-lg px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+          <Link href="/products" className="btn-primary text-lg px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
             Shop Now
-          </a>
-
+          </Link>
         </div>
       </section>
 
@@ -33,9 +56,7 @@ export default function Home() {
         <Swiper
           slidesPerView={3}
           spaceBetween={0}
-          pagination={{
-            clickable: true,
-          }}
+          pagination={{ clickable: true }}
           navigation={true}
           modules={[Pagination, Navigation]}
           breakpoints={{
@@ -45,11 +66,11 @@ export default function Home() {
           }}
           className="mySwiper"
         >
-          {products.map((product) => (
+          {products.map((product: any) => (
             <SwiperSlide key={product.id} className="pb-12 pt-4 pl-4 pr-4">
               <div className="hover-scale">
                 <Link href={`/product/${product.id}`}>
-                  <ProductCard name={product.name} price={product.price} />
+                  <ProductCard name={product.title} price={product.price} image={product.image} />
                 </Link>
               </div>
             </SwiperSlide>

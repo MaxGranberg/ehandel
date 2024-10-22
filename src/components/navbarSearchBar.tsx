@@ -2,33 +2,38 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { products } from "@/data/products";
-import { Product } from "@/types/product";
+import { fetchProducts } from "@/utils/api/fetchProducts";
 
 export default function NavbarSearchBar() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [suggestions, setSuggestions] = useState<Product[]>([]);
+  const [suggestions, setSuggestions] = useState<any[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
 
   // Handle search input and display suggestions
-  const handleSearch = (query: string) => {
+  const handleSearch = async (query: string) => {
     const trimmedQuery = query.trim().toLowerCase();
     if (trimmedQuery === "") {
       setSuggestions([]);
     } else {
-      const filtered = products.filter((product) =>
-        product.name.toLowerCase().includes(trimmedQuery)
-      );
-      setSuggestions(filtered);
-      setIsDropdownOpen(true); // Open dropdown if suggestions exist
+      try {
+        const products = await fetchProducts();
+
+        const filtered = products.filter((product: any) =>
+          product.title.toLowerCase().includes(trimmedQuery)
+        );
+        setSuggestions(filtered);
+        setIsDropdownOpen(true); // Open dropdown if suggestions exist
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
     }
   };
 
   // Handle selecting a product from the dropdown
-  const handleSelectProduct = (productId: string) => {
+  const handleSelectProduct = (productId: number) => {
     setSearchTerm("");
     setSuggestions([]);
     setIsDropdownOpen(false); // Close dropdown
@@ -73,9 +78,9 @@ export default function NavbarSearchBar() {
             <li
               key={product.id}
               onClick={() => handleSelectProduct(product.id)}
-              className="p-3 cursor-pointer hover:bg-gray-100 transition-all"
+              className="p-3 cursor-pointer hover:bg-gray-100 transition-all border-b"
             >
-              {product.name}
+              {product.title}
             </li>
           ))}
         </ul>
